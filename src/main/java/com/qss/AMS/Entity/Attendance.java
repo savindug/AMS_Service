@@ -13,6 +13,7 @@ public class Attendance {
     private String clockOut;
     private int otHrs;
     private String date;
+    private String branchname;
 
     public String getClockIn() {
         return clockIn;
@@ -75,6 +76,10 @@ public class Attendance {
         this.attTime = attTime;
     }
 
+    public void setBranchname(String branchname) {
+        this.branchname = branchname;
+    }
+
     public String getuId() {
         return uId;
     }
@@ -103,6 +108,8 @@ public class Attendance {
         return attTime;
     }
 
+    public String getBranchname() { return branchname; }
+
     @Override
     public String toString() {
         return "Attendance{" +
@@ -119,4 +126,15 @@ public class Attendance {
                 ", date='" + date + '\'' +
                 '}';
     }
+
+    public String attToString() {
+        return "{\"userId\":"+uId
+                + ",\"userName\" :"+uName
+                + ",\"clock\":"+attTime
+                + ", \"remarks\":" +remark
+                + ", \"branchName\":" +branchname +"}";
+
+    }
+
+
 }
