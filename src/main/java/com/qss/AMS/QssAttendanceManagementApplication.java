@@ -13,6 +13,7 @@ public class QssAttendanceManagementApplication {
 
 		System.out.println("AMS Service Started Successfully!");
 		SpringApplication.run(QssAttendanceManagementApplication.class, args);
+
 	}
 
     @Configuration

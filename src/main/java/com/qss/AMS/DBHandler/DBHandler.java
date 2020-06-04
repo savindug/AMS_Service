@@ -144,6 +144,9 @@ public class DBHandler {
 
     public ArrayList<Attendance> getAttendanceByDuration(String from, String to){
 
+        onlineDBHandler oo = new onlineDBHandler();
+        oo.getAttendanceByDuration("22","2025-02-17 16:37:52","Elle");
+
         ArrayList<Attendance> attList = new ArrayList<>();
 
         try{

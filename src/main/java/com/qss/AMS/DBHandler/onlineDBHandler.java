@@ -148,7 +148,8 @@ public class onlineDBHandler {
         String jsonString;
         String finalJsonString = null;
         try {
-            URL url = new URL("http://localhost:3000");
+            URL url = new URL("http://localhost/AMS-API/api/attendance/readmax.php?searchInput="+branchname);
+            System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -176,12 +177,16 @@ public class onlineDBHandler {
 
         //manipulating json object
         try{
-            JSONArray jsonArray = new JSONArray(finalJsonString);
+            JSONObject object = new JSONObject(finalJsonString);
+            JSONArray Jarray  = object.getJSONArray("data");
 
-            for(int i=0;i<jsonArray.length();i++){
-                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
+
+            for(int i=0;i<Jarray.length();i++){
+                JSONObject jsonObject1 = Jarray.getJSONObject(i);
+                System.out.println(jsonObject1);
                 clock = (jsonObject1.optString("clock")).toString();
+                System.out.println(clock);
 
             }
         }
@@ -196,11 +201,15 @@ public class onlineDBHandler {
 
 
         try{
-            ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
-            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(clock);
-            Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(to);
+
+
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(to);
+            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(clock);
             java.sql.Date sqlDate1= new java.sql.Date(date1.getTime());
             java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+            System.out.println(sqlDate1);
+            System.out.println(sqlDate2);
+            ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
             ps.setDate(1, sqlDate1);
             ps.setDate(2, sqlDate2);
             ResultSet rs = ps.executeQuery();
