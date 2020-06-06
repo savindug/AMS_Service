@@ -1,9 +1,8 @@
 package com.qss.AMS;
 
-import com.qss.AMS.Entity.Users;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+<<<<<<< HEAD
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +15,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+=======
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+>>>>>>> master
 
 @SpringBootApplication
 public class QssAttendanceManagementApplication {
@@ -24,10 +28,24 @@ public class QssAttendanceManagementApplication {
 
 		System.out.println("AMS Service Started Successfully!");
 		SpringApplication.run(QssAttendanceManagementApplication.class, args);
+
 	}
 
+<<<<<<< HEAD
 	@Configuration
 	public class AppConf implements WebMvcConfigurer {
+=======
+    @Configuration
+    public class AppConf implements WebMvcConfigurer {
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**")
+                    .allowedOrigins("http://localhost:3000")
+                    .allowedMethods("*");
+        }
+    }
+
+>>>>>>> master
 
 		@Override
 		public void addCorsMappings(CorsRegistry registry) {

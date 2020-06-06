@@ -2,9 +2,17 @@ package com.qss.AMS.DBHandler;
 
 import com.qss.AMS.Entity.Attendance;
 import com.qss.AMS.Entity.Users;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DBHandler {
+public class onlineDBHandler {
 
     private Users user;
     private Attendance att;
@@ -40,7 +48,7 @@ public class DBHandler {
             " where  [ras_Users].[UID] = [ras_AttRecord].ID and [ras_AttRecord].[AttTypeId] = [ras_AttTypeItem].[ItemId] and DateValue(Clock) between ?  and ? ";
 
 
-    public DBHandler() { }
+    public onlineDBHandler() { }
 
     @Autowired
     JdbcTemplate template;
@@ -49,17 +57,6 @@ public class DBHandler {
 
         ArrayList<Users> employeesList = new ArrayList<>();
 
-//        List<Users> employees = template.query(GET_EMPLOYEES_SQL, new RowMapper<Users>() {
-//            @Override
-//            public Users mapRow(ResultSet rs, int i) throws SQLException {
-//                user = new Users();
-//                user.setuID(rs.getString(1));
-//                user.setuName(rs.getString(4));
-//                user.setCreateDate(rs.getString(11));
-//                System.out.println(user.getuID()+"\t"+user.getuName()+"\t"+user.getCreateDate()+"\t");
-//                return user;
-//            }
-//        });
 
         try{
             connection = DBConnection.openConnection();
@@ -142,19 +139,77 @@ public class DBHandler {
         return leaveList;
     }
 
-    public ArrayList<Attendance> getAttendanceByDuration(String from, String to){
+    public int getAttendanceByDuration(String from, String to, String branchname){
 
-        onlineDBHandler oo = new onlineDBHandler();
-        oo.getAttendanceByDuration("22","2025-02-17 16:37:52","Elle");
 
-        ArrayList<Attendance> attList = new ArrayList<>();
+        /*Fetch max clock ---------------------------------------------------------------------------*/
+
+        String clock = "2005-05-05 05:05:05";
+        String jsonString;
+        String finalJsonString = null;
+        try {
+            URL url = new URL("http://localhost/AMS-API/api/attendance/readmax.php?searchInput="+branchname);
+            System.out.println(url);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+            //System.out.println("Output from Server .... \n");
+            while ((jsonString = br.readLine()) != null) {
+                //System.out.println(jsonString);
+                finalJsonString = jsonString;
+            }
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //System.out.println(finalJsonString);
+
+        //manipulating json object
+        try{
+            JSONObject object = new JSONObject(finalJsonString);
+            JSONArray Jarray  = object.getJSONArray("data");
+
+
+
+            for(int i=0;i<Jarray.length();i++){
+                JSONObject jsonObject1 = Jarray.getJSONObject(i);
+                System.out.println(jsonObject1);
+                clock = (jsonObject1.optString("clock")).toString();
+                System.out.println(clock);
+
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        /*Write Att based on fetched max clock ---------------------------------------------------------------------------*/
+
+        int responseCode = 0;
+
 
         try{
-            ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
-            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(from);
-            Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(to);
+
+
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(to);
+            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(clock);
             java.sql.Date sqlDate1= new java.sql.Date(date1.getTime());
             java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+            System.out.println(sqlDate1);
+            System.out.println(sqlDate2);
+            ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
             ps.setDate(1, sqlDate1);
             ps.setDate(2, sqlDate2);
             ResultSet rs = ps.executeQuery();
@@ -166,15 +221,49 @@ public class DBHandler {
                 att.setAttTime(rs.getString(3));
                 att.setVerifyMode(rs.getString(4));
                 att.setRemark(rs.getString(5));
-                System.out.println(att.toString());
-                attList.add(att);
+                att.setBranchname(branchname);
+                System.out.println(att.attToString());
+
+                try {
+                    URL url = new URL("http://localhost/AMS-API/api/attendance/write.php");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoOutput(true);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+
+                    //setting json object
+                    String input = att.attToString();  /*from attendance string is created*/
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(input.getBytes());
+                    os.flush();
+
+
+                    //saving response code to a variable
+                    responseCode = conn.getResponseCode();
+
+
+                    conn.disconnect();
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(responseCode == 200){
+                    /**/
+                }
+                else{
+                    return 0;  /*Return 0 if something fails*/
+                }
+
             }
 
         }catch(Exception e){
             e.printStackTrace();
         }
 
-        return attList;
+        return 1; /*return 1 if success*/
     }
 
 }
