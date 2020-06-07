@@ -15,6 +15,7 @@ public class Users {
     private String leaveSubmitted;
     private String leaveRemark;
     private String userdepart;
+    private String branchname;
 
     public Users() { }
 
@@ -103,6 +104,12 @@ public class Users {
         this.leaveRemark = leaveRemark;
     }
 
+    public void setBranchname(String branchname) {
+        this.branchname = branchname;
+    }
+
+    public String getBranchname() { return branchname; }
+
     @Override
     public String toString() {
         return "Users{" +
@@ -117,5 +124,14 @@ public class Users {
                 ", leaveRemark='" + leaveRemark + '\'' +
                 ", userdepart='" + userdepart + '\'' +
                 '}';
+    }
+
+    public String empToString() {
+        return "{\"userId\":"+  "\"" + uID + "\""
+                + ",\"UserName\" :"+ "\"" +uName + "\""
+                + ",\"Gender\":"+ "\"" +gender + "\""
+                + ", \"deptName\":" + "\"" +userdepart + "\""
+                + ", \"branchName\":" + "\"" +branchname + "\"" +"}";
+
     }
 }

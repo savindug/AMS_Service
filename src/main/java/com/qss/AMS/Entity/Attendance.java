@@ -128,11 +128,11 @@ public class Attendance {
     }
 
     public String attToString() {
-        return "{\"userId\":"+uId
-                + ",\"userName\" :"+uName
-                + ",\"clock\":"+attTime
-                + ", \"remarks\":" +remark
-                + ", \"branchName\":" +branchname +"}";
+        return "{\"userId\":"+  "\"" + uId + "\""
+                + ",\"userName\" :"+ "\"" +uName + "\""
+                + ",\"clock\":"+ "\"" +attTime + "\""
+                + ", \"remarks\":" + "\"" +remark + "\""
+                + ", \"branchName\":" + "\"" +branchname + "\"" +"}";
 
     }
 

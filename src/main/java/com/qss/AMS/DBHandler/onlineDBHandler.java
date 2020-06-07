@@ -31,7 +31,7 @@ public class onlineDBHandler {
 
     private String GET_EMPLOYEES_SQL = "select DISTINCT ras_Users.PIN, ras_Users.UserName, ras_Users.Sex, ras_Dept.DeptName, ras_Users.CreateDate, ras_Users.CreateDate \n" +
             "				  from ras_Users, ras_Dept \n" +
-            "				  where ras_Dept.DeptId = ras_Users.DeptId";
+            "				  where ras_Dept.DeptId = ras_Users.DeptId  ";
     private String GET_ALL_ATTENDANCE_SQL = "select DISTINCT [ras_Users].PIN as Employee_ID, [ras_Users].[UserName] as User_Name, [ras_AttRecord].[Clock] as Clock, [ras_AttTypeItem].[ItemName] as Attend_Type, [ras_AttRecord].[Remark] from  \n" +
             "        [ras_AttRecord], [ras_Dept], [ras_Users], [ras_AttTypeItem] \n" +
             "                  where  [ras_Users].[UID] = [ras_AttRecord].ID and [ras_AttRecord].[AttTypeId] = [ras_AttTypeItem].[ItemId]";
@@ -43,7 +43,7 @@ public class onlineDBHandler {
             "					 order by ras_Users.PIN";
 
 
-    private String GET_ATTENDANCE_BY_ID = "select DISTINCT [ras_Users].PIN as Employee_ID, [ras_Users].[UserName] as User_Name, [ras_AttRecord].[Clock] as Clock, [ras_AttTypeItem].[ItemName] as Attend_Type, [ras_AttRecord].[Remark] \n" +
+    private String GET_ATTENDANCE_BY_ID = "select DISTINCT [ras_Users].PIN as Employee_ID, [ras_Users].[UserName] as User_Name, [ras_AttRecord].[Clock] as Clock, [ras_AttTypeItem].[ItemName] as Attend_Type, [ras_AttRecord].[Remark]  \n" +
             "from    [ras_AttRecord], [ras_Dept], [ras_Users], [ras_AttTypeItem] \n" +
             " where  [ras_Users].[UID] = [ras_AttRecord].ID and [ras_AttRecord].[AttTypeId] = [ras_AttTypeItem].[ItemId] and DateValue(Clock) between ?  and ? ";
 
@@ -53,16 +53,74 @@ public class onlineDBHandler {
     @Autowired
     JdbcTemplate template;
 
-    public ArrayList<Users> getEmployees(){
+    public int uploadEmployees( String to, String branchname){
 
+        /*Fetch max userId ---------------------------------------------------------------------------*/
+
+        String userId = "0";
+        String jsonString;
+        String finalJsonString = null;
+        try {
+            URL url = new URL("http://localhost/AMS-API/api/employee/readmax.php?searchInput="+branchname);
+            System.out.println(url);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+            //System.out.println("Output from Server .... \n");
+            while ((jsonString = br.readLine()) != null) {
+                //System.out.println(jsonString);
+                finalJsonString = jsonString;
+            }
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //System.out.println(finalJsonString);
+
+        //manipulating json object
+        try{
+            JSONObject object = new JSONObject(finalJsonString);
+            JSONArray Jarray  = object.getJSONArray("data");
+
+
+
+            for(int i=0;i<Jarray.length();i++){
+                JSONObject jsonObject1 = Jarray.getJSONObject(i);
+                System.out.println(jsonObject1);
+                userId = (jsonObject1.optString("userId")).toString();
+                System.out.println(userId);
+
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        /*Write Employee based on fetched max userId ---------------------------------------------------------------------------*/
+        int responseCode = 0;
         ArrayList<Users> employeesList = new ArrayList<>();
 
 
         try{
             connection = DBConnection.openConnection();
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(GET_EMPLOYEES_SQL);
-            System.out.println("============== getEmployees ==============");
+            ps = connection.prepareStatement(GET_EMPLOYEES_SQL);
+            /*ps.setString(1, userId);*/
+            /*ps.setInt(2, Integer.parseInt(to));*/
+            ResultSet rs = ps.executeQuery();
+            System.out.println(rs);
+            System.out.println("============== upload Employees ==============");
             while(rs.next()){
                 user = new Users();
                 user.setuID(rs.getString(1));
@@ -71,43 +129,58 @@ public class onlineDBHandler {
                 user.setUserdepart(rs.getString(4));
                 user.setLastLoggedIn(rs.getString(5));
                 user.setCreateDate(rs.getString(6));
-                System.out.println(user.toString());
-                employeesList.add(user);
+                user.setBranchname(branchname);
+                if(Integer.parseInt(userId) > Integer.parseInt(user.getuID())){
+                    continue;
+                }
+                System.out.println(user.empToString());
+
+
+                try {
+                    URL url = new URL("http://localhost/AMS-API/api/employee/write.php");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoOutput(true);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+
+                    //setting json object
+                    String input = user.empToString();  /*from user string is created*/
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(input.getBytes());
+                    os.flush();
+
+
+                    //saving response code to a variable
+                    responseCode = conn.getResponseCode();
+
+
+                    conn.disconnect();
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(responseCode == 200){
+                    System.out.println("pass");
+                }
+                else{
+                    System.out.println("fail");
+                    return 0;  /*Return 0 if something fails*/
+
+                }
+
             }
 
         }catch(Exception e){
             e.printStackTrace();
         }
 
-        return employeesList;
+        return 1;
     }
 
-    public ArrayList<Attendance> getAllAttendance(){
 
-        ArrayList<Attendance> attList = new ArrayList<>();
-
-        try{
-            connection = DBConnection.openConnection();
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(GET_ALL_ATTENDANCE_SQL);
-            System.out.println("============== getAllAttendance ==============");
-            while(rs.next()){
-                att = new Attendance();
-                att.setuId(rs.getString(1));
-                att.setuName(rs.getString(2));
-                att.setAttTime(rs.getString(3));
-                att.setVerifyMode(rs.getString(4));
-                att.setRemark(rs.getString(5));
-                System.out.println(att.toString());
-                attList.add(att);
-            }
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        return attList;
-    }
 
     public ArrayList<Users> getAllLeaves(){
 
@@ -130,6 +203,9 @@ public class onlineDBHandler {
                 System.out.println(leave.toString());
                 leaveList.add(leave);
 
+
+
+
             }
 
         }catch(Exception e){
@@ -139,7 +215,7 @@ public class onlineDBHandler {
         return leaveList;
     }
 
-    public int getAttendanceByDuration(String from, String to, String branchname){
+    public int uploadAttendanceByDuration( String to, String branchname){
 
 
         /*Fetch max clock ---------------------------------------------------------------------------*/
@@ -203,25 +279,33 @@ public class onlineDBHandler {
         try{
 
 
-            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(to);
-            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(clock);
+            connection = DBConnection.openConnection();
+            Statement st = connection.createStatement();
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(to);
+            Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(clock);
             java.sql.Date sqlDate1= new java.sql.Date(date1.getTime());
             java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+            System.out.println("At online DB Handler - 1");
             System.out.println(sqlDate1);
             System.out.println(sqlDate2);
+
+
+
             ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
-            ps.setDate(1, sqlDate1);
-            ps.setDate(2, sqlDate2);
+            ps.setDate(1, sqlDate2);
+            ps.setDate(2, sqlDate1);
             ResultSet rs = ps.executeQuery();
-            System.out.println("============== getAttendanceByDuration ==============");
+            System.out.println(rs);
             while(rs.next()){
+
                 att = new Attendance();
                 att.setuId(rs.getString(1));
                 att.setuName(rs.getString(2));
                 att.setAttTime(rs.getString(3));
-                att.setVerifyMode(rs.getString(4));
+                att.setDepart(rs.getString(4));
                 att.setRemark(rs.getString(5));
                 att.setBranchname(branchname);
+
                 System.out.println(att.attToString());
 
                 try {
