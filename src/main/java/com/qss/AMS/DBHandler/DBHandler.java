@@ -147,6 +147,7 @@ public class DBHandler {
     public ArrayList<Attendance> getAttendanceByDuration(String from, String to){
 
 
+
         ArrayList<Attendance> attList = new ArrayList<>();
 
         try{
