@@ -75,6 +75,8 @@ public class DBHandler {
 //            }
 //        });
 
+
+
         try{
             connection = DBConnection.openConnection();
             Statement st = connection.createStatement();
@@ -158,21 +160,35 @@ public class DBHandler {
 
     public ArrayList<Attendance> getAttendanceByDuration(String from, String to){
 
+<<<<<<< HEAD
 //        onlineDBHandler oo = new onlineDBHandler();
 //        oo.getAttendanceByDuration("22","2025-02-17 16:37:52","Elle");
+=======
+
+>>>>>>> master
 
         ArrayList<Attendance> attList = new ArrayList<>();
 
         try{
+<<<<<<< HEAD
             connection = DBConnection.openConnection();
             Statement st = connection.createStatement();
             ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
+=======
+
+            connection = DBConnection.openConnection();
+            Statement st = connection.createStatement();
+>>>>>>> master
             Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(from);
             Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(to);
             java.sql.Date sqlDate1= new java.sql.Date(date1.getTime());
             java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+            ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
             ps.setDate(1, sqlDate1);
             ps.setDate(2, sqlDate2);
+            System.out.println("At DB Handler");
+            System.out.println(sqlDate1);
+            System.out.println(sqlDate2);
             ResultSet rs = ps.executeQuery();
             System.out.println("============== getAttendanceByDuration ==============");
             while(rs.next()){
