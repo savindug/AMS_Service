@@ -41,6 +41,15 @@ public class RESTfulServiceHandler {
     public Iterable<Attendance> getAttendanceByDuration(@PathParam("from") String from, @PathParam("to") String to){
         return iController.getAttendanceByDuration(from, to);
     }
-    
+
+    @GetMapping("/getLeavesByDuration")
+    public Iterable<Users> getLeavesByDuration(@PathParam("from") String from, @PathParam("to") String to){
+        return iController.getLeavesByDuration(from, to);
+    }
+
+    @GetMapping("/getOTByDuration")
+    public Iterable<Attendance> getOTByDuration(@PathParam("from") String from, @PathParam("to") String to){
+        return iController.getOTByDuration(from, to);
+    }
 
 }
