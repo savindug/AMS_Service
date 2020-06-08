@@ -16,4 +16,8 @@ public interface IController {
     ArrayList<Users> getAllLeaves();
 
     ArrayList<Attendance> getAttendanceByDuration(String from, String to);
+
+    ArrayList<Users> getLeavesByDuration(String from, String to);
+
+    ArrayList<Attendance> getOTByDuration(String from, String to);
 }

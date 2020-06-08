@@ -35,4 +35,13 @@ public class IControllerImpl implements IController{
         return dbHandler.getAttendanceByDuration(from, to);
     }
 
+    @Override
+    public ArrayList<Users> getLeavesByDuration(String from, String to) {
+        return dbHandler.getLeavesByDuration(from, to);
+    }
+
+    @Override
+    public ArrayList<Attendance> getOTByDuration(String from, String to) {
+        return dbHandler.getOTByDuration(from, to);
+    }
 }

@@ -1,0 +1,9 @@
+com\qss\AMS\DBHandler\DBConnection.class
+com\qss\AMS\RESTful_Service\RESTfulServiceHandler.class
+com\qss\AMS\Controller\IController.class
+com\qss\AMS\Entity\Users.class
+com\qss\AMS\Entity\Attendance.class
+com\qss\AMS\QssAttendanceManagementApplication$AppConf.class
+com\qss\AMS\Controller\IControllerImpl.class
+com\qss\AMS\QssAttendanceManagementApplication.class
+com\qss\AMS\DBHandler\DBHandler.class

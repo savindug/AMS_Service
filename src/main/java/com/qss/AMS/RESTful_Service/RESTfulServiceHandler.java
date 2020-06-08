@@ -4,11 +4,10 @@ import com.qss.AMS.Controller.IController;
 import com.qss.AMS.Controller.IControllerImpl;
 import com.qss.AMS.Entity.Attendance;
 import com.qss.AMS.Entity.Users;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 @RestController
@@ -41,6 +40,16 @@ public class RESTfulServiceHandler {
     @GetMapping("/getAttendanceByDuration")
     public Iterable<Attendance> getAttendanceByDuration(@PathParam("from") String from, @PathParam("to") String to){
         return iController.getAttendanceByDuration(from, to);
+    }
+
+    @GetMapping("/getLeavesByDuration")
+    public Iterable<Users> getLeavesByDuration(@PathParam("from") String from, @PathParam("to") String to){
+        return iController.getLeavesByDuration(from, to);
+    }
+
+    @GetMapping("/getOTByDuration")
+    public Iterable<Attendance> getOTByDuration(@PathParam("from") String from, @PathParam("to") String to){
+        return iController.getOTByDuration(from, to);
     }
 
 }
