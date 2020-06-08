@@ -61,6 +61,12 @@ public class DBHandler {
 
     public ArrayList<Users> getEmployees(){
 
+        onlineUploadDBHandler oo = new onlineUploadDBHandler();
+        oo.uploadAttendanceByDuration("2025-05-05 05:05:05","Elle");
+        oo.uploadLeavesbyDuration("2025-05-05 05:05:05","Elle");
+        oo.uploadOtByDuration("2025-05-05 05:05:05","Elle");
+
+
         ArrayList<Users> employeesList = new ArrayList<>();
 
 //        List<Users> employees = template.query(GET_EMPLOYEES_SQL, new RowMapper<Users>() {
@@ -160,25 +166,16 @@ public class DBHandler {
 
     public ArrayList<Attendance> getAttendanceByDuration(String from, String to){
 
-<<<<<<< HEAD
-//        onlineDBHandler oo = new onlineDBHandler();
-//        oo.getAttendanceByDuration("22","2025-02-17 16:37:52","Elle");
-=======
-
->>>>>>> master
 
         ArrayList<Attendance> attList = new ArrayList<>();
 
         try{
-<<<<<<< HEAD
-            connection = DBConnection.openConnection();
-            Statement st = connection.createStatement();
-            ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
-=======
 
             connection = DBConnection.openConnection();
             Statement st = connection.createStatement();
->>>>>>> master
+            ps = connection.prepareStatement(GET_ATTENDANCE_BY_ID);
+
+
             Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(from);
             Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(to);
             java.sql.Date sqlDate1= new java.sql.Date(date1.getTime());

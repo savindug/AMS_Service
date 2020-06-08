@@ -136,5 +136,16 @@ public class Attendance {
 
     }
 
+    public String otToString() {
+        return "{\"userId\":"+  "\"" + uId + "\""
+                + ",\"userName\" :"+ "\"" +uName + "\""
+                + ",\"clockIn\":"+ "\"" +clockIn + "\""
+                + ",\"clockOut\":"+ "\"" +clockOut+ "\""
+                + ", \"dateo\":" + "\"" +date+ "\""
+                + ", \"otHours\":" + "\"" +otHrs+ "\""
+                + ", \"branchName\":" + "\"" +branchname + "\"" +"}";
+
+    }
+
 
 }
