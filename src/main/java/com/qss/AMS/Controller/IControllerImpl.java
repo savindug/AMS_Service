@@ -58,6 +58,7 @@ public class IControllerImpl implements IController{
 
     @Override
     public ArrayList<Attendance> getAttendanceByDurationAdmin(String from, String to, String branchname) {
+
         return downloadHandler.downloadAttendance(from, to, branchname);
     }
 
