@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.qss.AMS.QssAttendanceManagementApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.262 s - in com.qss.AMS.QssAttendanceManagementApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.907 s - in com.qss.AMS.QssAttendanceManagementApplicationTests
