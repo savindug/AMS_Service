@@ -60,7 +60,6 @@ public class IControllerImpl implements IController{
     }
 
 
-<<<<<<< HEAD
     @Override
     public String usersExport(ArrayList<Users> usrL, String path, ArrayList<String> headers, int fl) throws FileNotFoundException, IOException {
         new WorkbookFactory();
@@ -238,29 +237,5 @@ public class IControllerImpl implements IController{
 
 
         return flag;
-=======
-
-    /*Admin Side--------------------------------------*/
-
-
-    public ArrayList<Users> getEmployeesAdmin(String branchname) {
-        return downloadHandler.downloadEmployees(branchname);
-    }
-
-    @Override
-    public ArrayList<Attendance> getAttendanceByDurationAdmin(String from, String to, String branchname) {
-
-        return downloadHandler.downloadAttendance(from, to, branchname);
-    }
-
-    @Override
-    public ArrayList<Users> getLeavesByDurationAdmin(String from, String to, String branchname) {
-        return downloadHandler.downloadLeaves(from, to, branchname);
-    }
-
-    @Override
-    public ArrayList<Attendance> getOTByDurationAdmin(String from, String to, String branchname) {
-        return downloadHandler.downloadOt(from, to, branchname);
->>>>>>> master
     }
 }

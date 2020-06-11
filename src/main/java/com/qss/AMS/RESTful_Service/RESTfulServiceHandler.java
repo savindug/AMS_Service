@@ -4,14 +4,7 @@ import com.qss.AMS.Controller.IController;
 import com.qss.AMS.Controller.IControllerImpl;
 import com.qss.AMS.Entity.Attendance;
 import com.qss.AMS.Entity.Users;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.*;
-=======
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
->>>>>>> master
 
 import javax.websocket.server.PathParam;
 import java.io.IOException;
@@ -60,7 +53,6 @@ public class RESTfulServiceHandler {
         return iController.getOTByDuration(from, to);
     }
 
-<<<<<<< HEAD
     @GetMapping("/exportEmployees/{filename:.+}")
     public String exportEmp(@PathVariable String filename) throws IOException {
 
@@ -190,31 +182,4 @@ public class RESTfulServiceHandler {
 //        }
 
 
-=======
-
-
-
-    /*Admin Implementation-----------------------------------------------------------------------*/
-
-    @GetMapping("/getEmployeesAdmin")
-    public Iterable<Users> getEmployeesAdmin(@PathParam("branchname") String branchname){
-        return iController.getEmployeesAdmin(branchname);
-    }
-
-    @GetMapping("/getAttendanceByDurationAdmin")
-    public Iterable<Attendance> getAttendanceByDurationAdmin(@PathParam("from") String from, @PathParam("to") String to, @PathParam("branchname") String branchname){
-        return iController.getAttendanceByDurationAdmin(from, to, branchname);
-    }
-
-    @GetMapping("/getLeavesByDurationAdmin")
-    public Iterable<Users> getLeavesByDurationAdmin(@PathParam("from") String from, @PathParam("to") String to , @PathParam("branchname") String branchname){
-        return iController.getLeavesByDurationAdmin(from, to, branchname);
-    }
-
-    @GetMapping("/getOTByDurationAdmin")
-    public Iterable<Attendance> getOTByDurationAdmin(@PathParam("from") String from, @PathParam("to") String to , @PathParam("branchname") String branchname){
-        return iController.getOTByDurationAdmin(from, to, branchname);
-    }
-
->>>>>>> master
 }
