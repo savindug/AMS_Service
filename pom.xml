@@ -36,8 +36,6 @@
 			</exclusions>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>net.sf.ucanaccess</groupId>
 			<artifactId>ucanaccess</artifactId>
@@ -85,6 +83,12 @@
             <version>0.0.20131108.vaadin1</version>
             <scope>compile</scope>
         </dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+		</dependency>
 
     </dependencies>
 
