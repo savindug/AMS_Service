@@ -134,4 +134,16 @@ public class Users {
                 + ", \"branchName\":" + "\"" +branchname + "\"" +"}";
 
     }
+
+
+    public String leaveToString() {
+        return "{\"userId\":"+  "\"" + uID + "\""
+                + ",\"userName\" :"+ "\"" +uName + "\""
+                + ",\"fromDate\":"+ "\"" +leaveStart+ "\""
+                + ",\"toDate\":"+ "\"" +leaveEnd + "\""
+                + ",\"submittedDate\":"+ "\"" +leaveSubmitted+ "\""
+                + ", \"branchName\":" + "\"" +branchname + "\""
+                + ", \"remarks\":" + "\"" +leaveRemark+ "\""+"}";
+
+    }
 }

@@ -13,7 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class onlineDownloadHandler {
@@ -73,7 +75,7 @@ public class onlineDownloadHandler {
 
             for(int i=0;i<Jarray.length();i++){
                 JSONObject jsonObject1 = Jarray.getJSONObject(i);
-                System.out.println(jsonObject1);
+
                 user = new Users();
 
                 user.setuID((jsonObject1.optString("userId")).toString());
@@ -81,9 +83,9 @@ public class onlineDownloadHandler {
                 user.setGender((jsonObject1.optString("Gender")).toString());
                 user.setUserdepart((jsonObject1.optString("deptName")).toString());
                 user.setBranchname((jsonObject1.optString("branchName")).toString());
-
-                System.out.println(user.toString());
                 employeesList.add(user);
+
+
 
 
 
@@ -95,7 +97,7 @@ public class onlineDownloadHandler {
             e.printStackTrace();
         }
 
-
+        System.out.println(employeesList);
         return employeesList;
     }
 
@@ -103,11 +105,21 @@ public class onlineDownloadHandler {
 
     public ArrayList<Users> downloadLeaves(String from, String to, String branchname){
 
+
+
+
         ArrayList<Users> leaveList = new ArrayList<>();
         String jsonString;
         String finalJsonString = null;
         try {
-            URL url = new URL("http://localhost/AMS-API/api/leave/read.php?searchInput="+branchname+"&searchClock1="+from+"&searchClock2="+to);
+
+            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(from);
+            Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(to);
+            java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime());
+            java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+
+
+            URL url = new URL("http://localhost/AMS-API/api/leave/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -175,12 +187,24 @@ public class onlineDownloadHandler {
 
 
 
+
+
         ArrayList<Attendance> attList = new ArrayList<>();
 
         String jsonString;
         String finalJsonString = null;
         try {
-            URL url = new URL("http://localhost/AMS-API/api/attendance/read.php?searchInput="+branchname+"&searchClock1="+from+"&searchClock2="+to);
+
+
+
+            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(from);
+            Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(to);
+            java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime());
+            java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+
+
+
+            URL url = new URL("http://localhost/AMS-API/api/attendance/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -247,7 +271,15 @@ public class onlineDownloadHandler {
         String jsonString;
         String finalJsonString = null;
         try {
-            URL url = new URL("http://localhost/AMS-API/api/ot/read.php?searchInput="+branchname+"&searchClock1="+from+"&searchClock2="+to);
+
+
+            Date date1 = new SimpleDateFormat("MM/dd/yyyy").parse(from);
+            Date date2 = new SimpleDateFormat("MM/dd/yyyy").parse(to);
+            java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime());
+            java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
+
+
+            URL url = new URL("http://localhost/AMS-API/api/ot/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -291,7 +323,7 @@ public class onlineDownloadHandler {
                 att.setClockIn((jsonObject1.optString("clockIn")).toString());
                 att.setClockOut((jsonObject1.optString("clockOut")).toString());
                 att.setDate((jsonObject1.optString("dateo")).toString());
-                att.setOtHrs(Integer.parseInt(jsonObject1.optString("otHours")));
+                att.setOtHrs(Integer.parseInt((jsonObject1.optString("OT_or_LC_hrs")).toString()));
                 att.setBranchname((jsonObject1.optString("branchName")).toString());
                 System.out.println(att.toString());
                 otList.add(att);

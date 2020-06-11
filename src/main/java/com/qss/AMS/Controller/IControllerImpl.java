@@ -1,6 +1,7 @@
 package com.qss.AMS.Controller;
 
 import com.qss.AMS.DBHandler.DBHandler;
+import com.qss.AMS.DBHandler.onlineDownloadHandler;
 import com.qss.AMS.Entity.Attendance;
 import com.qss.AMS.Entity.Users;
 import org.apache.poi.ss.usermodel.Row;
@@ -21,6 +22,7 @@ import java.util.Date;
 public class IControllerImpl implements IController{
 
     DBHandler dbHandler = new DBHandler();
+    onlineDownloadHandler downloadHandler = new  onlineDownloadHandler();
 
     @Override
     public String hello() {
@@ -58,6 +60,7 @@ public class IControllerImpl implements IController{
     }
 
 
+<<<<<<< HEAD
     @Override
     public String usersExport(ArrayList<Users> usrL, String path, ArrayList<String> headers, int fl) throws FileNotFoundException, IOException {
         new WorkbookFactory();
@@ -235,5 +238,29 @@ public class IControllerImpl implements IController{
 
 
         return flag;
+=======
+
+    /*Admin Side--------------------------------------*/
+
+
+    public ArrayList<Users> getEmployeesAdmin(String branchname) {
+        return downloadHandler.downloadEmployees(branchname);
+    }
+
+    @Override
+    public ArrayList<Attendance> getAttendanceByDurationAdmin(String from, String to, String branchname) {
+
+        return downloadHandler.downloadAttendance(from, to, branchname);
+    }
+
+    @Override
+    public ArrayList<Users> getLeavesByDurationAdmin(String from, String to, String branchname) {
+        return downloadHandler.downloadLeaves(from, to, branchname);
+    }
+
+    @Override
+    public ArrayList<Attendance> getOTByDurationAdmin(String from, String to, String branchname) {
+        return downloadHandler.downloadOt(from, to, branchname);
+>>>>>>> master
     }
 }

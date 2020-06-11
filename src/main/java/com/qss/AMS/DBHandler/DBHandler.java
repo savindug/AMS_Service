@@ -61,6 +61,12 @@ public class DBHandler {
 
     public ArrayList<Users> getEmployees(){
 
+        onlineUploadDBHandler oo = new onlineUploadDBHandler();
+        oo.uploadAttendanceByDuration("2025-05-05 05:05:05","Elle");
+        oo.uploadLeavesbyDuration("2025-05-05 05:05:05","Elle");
+        oo.uploadOtByDuration("2025-05-05 05:05:05","Elle");
+
+
         ArrayList<Users> employeesList = new ArrayList<>();
 
 //        List<Users> employees = template.query(GET_EMPLOYEES_SQL, new RowMapper<Users>() {
