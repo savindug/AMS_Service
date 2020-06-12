@@ -18,7 +18,6 @@ public class RESTfulServiceHandler {
 
     @RequestMapping(method = RequestMethod.GET, path = "/hello")
     public String hello(){
-        System.out.println("hello");
         return iController.hello();
     }
 
@@ -53,8 +52,6 @@ public class RESTfulServiceHandler {
         return iController.getOTByDuration(from, to);
     }
 
-    @GetMapping("/exportEmployees/{filename:.+}")
-    public String exportEmp(@PathVariable String filename) throws IOException {
 
     /*Report Related Methods*/
 
@@ -291,118 +288,24 @@ public class RESTfulServiceHandler {
 
     /*Admin Implementation-----------------------------------------------------------------------*/
 
-        System.out.println(" path: " + path);
-
-        ArrayList<Users> empL = iController.getEmployees();
-
-        flag = iController.usersExport(empL, path, headers, 2);
-
-        return flag;
+    @GetMapping("/getEmployeesAdmin")
+    public Iterable<Users> getEmployeesAdmin(@PathParam("branchname") String branchname){
+        return iController.getEmployeesAdmin(branchname);
     }
 
-    @GetMapping("/exportAtt/{filename:.+}")
-    public String exporAtttbyduration(@PathVariable String filename, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
-
-        String flag = null;
-        ArrayList<String> headers = new ArrayList<>();
-
-        ArrayList<Attendance> attL = null;
-
-        String path = filename.replace(',', '\\');
-
-            headers.add("Employee ID");
-            headers.add("Username");
-            headers.add("Department");
-            headers.add("Attend Time");
-            headers.add("Verify Mode");
-            attL = iController.getAttendanceByDuration(from, to);
-            flag = iController.attExport(attL, path, headers, 1);
-
-        return flag;
+    @GetMapping("/getAttendanceByDurationAdmin")
+    public Iterable<Attendance> getAttendanceByDurationAdmin(@PathParam("from") String from, @PathParam("to") String to, @PathParam("branchname") String branchname){
+        return iController.getAttendanceByDurationAdmin(from, to, branchname);
     }
 
-    @GetMapping("/exportLv/{filename:.+}")
-    public String exportLvbyduration(@PathVariable String filename, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
-
-        String flag = null;
-        ArrayList<String> headers = new ArrayList<>();
-
-        ArrayList<Users> usrL = null;
-
-        String path = filename.replace(',', '\\');
-
-        headers.add("Employee ID");
-        headers.add("Username");
-        headers.add("Starts from");
-        headers.add("Ends on");
-        headers.add("Leave Submitted on");
-        usrL = iController.getLeavesByDuration(from, to);
-        flag = iController.usersExport(usrL, path, headers, 1);
-
-        return flag;
+    @GetMapping("/getLeavesByDurationAdmin")
+    public Iterable<Users> getLeavesByDurationAdmin(@PathParam("from") String from, @PathParam("to") String to , @PathParam("branchname") String branchname){
+        return iController.getLeavesByDurationAdmin(from, to, branchname);
     }
 
-    @GetMapping("/exportOt/{filename:.+}")
-    public String exportOtbyduration(@PathVariable String filename, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
-
-        String flag = null;
-        ArrayList<String> headers = new ArrayList<>();
-
-
-        ArrayList<Attendance> attL = null;
-
-        String path = filename.replace(',', '\\');
-
-        headers.add("Employee ID");
-        headers.add("Username");
-        headers.add("Clock In");
-        headers.add("Clock out");
-        headers.add("OT or Late hours");
-        headers.add("Date");
-        attL = iController.getOTByDuration(from, to);
-        flag = iController.attExport(attL, path, headers, 2);;
-
-        return flag;
+    @GetMapping("/getOTByDurationAdmin")
+    public Iterable<Attendance> getOTByDurationAdmin(@PathParam("from") String from, @PathParam("to") String to , @PathParam("branchname") String branchname){
+        return iController.getOTByDurationAdmin(from, to, branchname);
     }
-
-//    public void expsssortbyduration(@PathParam("path") String filename, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
-//
-//        String flag = null;
-//        System.out.println(" filename: " + filename);
-//
-//        ArrayList<String> headers = new ArrayList<>();
-//
-//        ArrayList<Users> usrL = null;
-//
-//        String path = filename.replace(',', '\\');
-//
-//
-//            headers.add("Employee ID");
-//            headers.add("Username");
-//            headers.add("Department");
-//            headers.add("Attend Time");
-//            headers.add("Verify Mode");
-//            attL = iController.getAttendanceByDuration(from, to);
-//            flag = iController.attExport(attL, path, headers, 1);
-//
-//            headers.add("Employee ID");
-//            headers.add("Username");
-//            headers.add("Starts from");
-//            headers.add("Ends on");
-//            headers.add("Leave Submitted on");
-//            usrL = iController.getLeavesByDuration(from, to);
-//            flag = iController.usersExport(usrL, path, headers, 1);
-//
-//            headers.add("Employee ID");
-//            headers.add("Username");
-//            headers.add("Clock In");
-//            headers.add("Clock out");
-//            headers.add("OT or Late hours");
-//            headers.add("Date");
-//            attL = iController.getOTByDuration(from, to);
-//            flag = iController.attExport(attL, path, headers, 2);
-//
-//        }
-
 
 }

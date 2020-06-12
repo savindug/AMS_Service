@@ -23,7 +23,6 @@ public interface IController {
 
     ArrayList<Attendance> getOTByDuration(String from, String to);
 
-    String usersExport(ArrayList<Users> userL, String path, ArrayList<String> headers, int fl) throws FileNotFoundException, IOException;
 
 
     /*Report Print-------------------------------------------------------------*/
@@ -42,4 +41,11 @@ public interface IController {
 
     /*Admin Side---------------------------------------------------------------*/
 
+    ArrayList<Users> getEmployeesAdmin(String branchname);
+
+    ArrayList<Attendance> getAttendanceByDurationAdmin(String from, String to, String branchname);
+
+    ArrayList<Users> getLeavesByDurationAdmin(String from, String to , String branchname);
+
+    ArrayList<Attendance> getOTByDurationAdmin(String from, String to , String branchname);
 }
