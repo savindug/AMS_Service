@@ -205,7 +205,7 @@ public class RESTfulServiceHandler {
         ArrayList<Users> empL = iController.getEmployeesAdmin(branchname);
         System.out.println("Emp List from Download" + empL);
 
-        flag = iController.usersExportAdmin(empL, path, headers, "00/00/0000", "00/00/0000" , branchname, 2);
+        flag = iController.usersExportAdmin(empL, path, headers, "00/00/0000", "00/00/0000" , branchname, 5);
         System.out.println("flG HERE" + flag);
         return flag;
     }
@@ -227,7 +227,7 @@ public class RESTfulServiceHandler {
         headers.add("Verify Mode");
         attL = iController.getAttendanceByDurationAdmin(from, to, branchname);
         System.out.println("Emp List from Download" + attL);
-        flag = iController.attExportAdmin(attL, path, headers, from, to, branchname, 1);
+        flag = iController.attExportAdmin(attL, path, headers, from, to, branchname, 4);
 
         return flag;
     }
@@ -248,7 +248,7 @@ public class RESTfulServiceHandler {
         headers.add("Ends on");
         headers.add("Leave Submitted on");
         usrL = iController.getLeavesByDurationAdmin(from, to, branchname);
-        flag = iController.usersExportAdmin(usrL, path, headers, from, to, branchname,1);
+        flag = iController.usersExportAdmin(usrL, path, headers, from, to, branchname,4);
 
         return flag;
     }
@@ -271,7 +271,7 @@ public class RESTfulServiceHandler {
         headers.add("OT or Late hours");
         headers.add("Date");
         attL = iController.getOTByDurationAdmin(from, to, branchname);
-        flag = iController.attExportAdmin(attL, path, headers, from, to, branchname,2);;
+        flag = iController.attExportAdmin(attL, path, headers, from, to, branchname,5);;
 
         return flag;
     }

@@ -266,7 +266,7 @@ public class IControllerImpl implements IController{
 
         int rowNum = 1;
 
-        if(fl == 1){
+        if(fl == 4){
             for(Users urs: usrL){
                 Row row = sheet.createRow(rowNum++);
 
@@ -284,7 +284,7 @@ public class IControllerImpl implements IController{
 
             ls = "\\Leave_List_";
 
-        }else if(fl == 2){
+        }else if(fl == 5){
             for(Users urs: usrL){
                 Row row = sheet.createRow(rowNum++);
 
@@ -361,7 +361,7 @@ public class IControllerImpl implements IController{
 
         int rowNum = 1;
 
-        if(fl == 1){
+        if(fl == 4){
             for(Attendance att: attL){
                 Row row = sheet.createRow(rowNum++);
 
@@ -377,7 +377,7 @@ public class IControllerImpl implements IController{
                         .setCellValue(att.getVerifyMode());
             }
             ls = "\\Attendance_List_";
-        }else if(fl == 2){
+        }else if(fl == 5){
             for(Attendance att: attL){
                 Row row = sheet.createRow(rowNum++);
 
