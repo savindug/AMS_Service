@@ -48,4 +48,13 @@ public interface IController {
     ArrayList<Users> getLeavesByDurationAdmin(String from, String to , String branchname);
 
     ArrayList<Attendance> getOTByDurationAdmin(String from, String to , String branchname);
+
+
+    /*Data Upload---------------------------------------------------------------*/
+
+    int uploadDataEmp(String branchname);
+    int uploadDataAtt(String branchname);
+    int uploadDataLv(String branchname);
+    int uploadDataOt(String branchname);
+
 }

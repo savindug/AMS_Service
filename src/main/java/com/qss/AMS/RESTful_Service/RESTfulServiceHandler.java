@@ -308,4 +308,29 @@ public class RESTfulServiceHandler {
         return iController.getOTByDurationAdmin(from, to, branchname);
     }
 
+
+
+    /*upload-----------------------------------------------------------------------------------------*/
+
+    @GetMapping("/uploadEmployees")
+    public int uploadDataEmp(@PathParam("branchname") String branchname){
+        return iController.uploadDataEmp(branchname);
+    }
+
+    @GetMapping("/uploadAttendance")
+    public int uploadDataAtt(@PathParam("branchname") String branchname){
+        return iController.uploadDataAtt(branchname);
+    }
+
+    @GetMapping("/uploadLeaves")
+    public int uploadDataLv( @PathParam("branchname") String branchname){
+        return iController.uploadDataLv(branchname);
+    }
+
+    @GetMapping("/uploadOT")
+    public int uploadDataOt(@PathParam("branchname") String branchname){
+        return iController.uploadDataOt(branchname);
+    }
+    
+
 }

@@ -2,6 +2,7 @@ package com.qss.AMS.Controller;
 
 import com.qss.AMS.DBHandler.DBHandler;
 import com.qss.AMS.DBHandler.onlineDownloadHandler;
+import com.qss.AMS.DBHandler.onlineUploadDBHandler;
 import com.qss.AMS.Entity.Attendance;
 import com.qss.AMS.Entity.Users;
 import org.apache.poi.ss.usermodel.Row;
@@ -24,6 +25,7 @@ public class IControllerImpl implements IController{
 
     DBHandler dbHandler = new DBHandler();
     onlineDownloadHandler downloadHandler = new  onlineDownloadHandler();
+    onlineUploadDBHandler uploadHandler = new onlineUploadDBHandler();
 
     @Override
     public String hello() {
@@ -461,5 +463,23 @@ public class IControllerImpl implements IController{
     @Override
     public ArrayList<Attendance> getOTByDurationAdmin(String from, String to, String branchname) {
         return downloadHandler.downloadOt(from, to, branchname);
+    }
+
+    @Override
+    public int uploadDataEmp(String branchname) {
+        return uploadHandler.uploadEmployees("1000000",branchname);
+    }
+
+    @Override
+    public int uploadDataAtt(String branchname) {
+        return uploadHandler.uploadAttendanceByDuration("2035-05-05 05:05:05",branchname);
+    }
+    @Override
+    public int uploadDataLv(String branchname) {
+        return uploadHandler.uploadLeavesbyDuration("2035-05-05 05:05:05",branchname);
+    }
+    @Override
+    public int uploadDataOt(String branchname) {
+        return uploadHandler.uploadOtByDuration("2035-05-05 05:05:05",branchname);
     }
 }
