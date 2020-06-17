@@ -142,44 +142,6 @@ public class RESTfulServiceHandler {
         return flag;
     }
 
-//    public void expsssortbyduration(@PathParam("path") String filename, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
-//
-//        String flag = null;
-//        System.out.println(" filename: " + filename);
-//
-//        ArrayList<String> headers = new ArrayList<>();
-//
-//        ArrayList<Users> usrL = null;
-//
-//        String path = filename.replace(',', '\\');
-//
-//
-//            headers.add("Employee ID");
-//            headers.add("Username");
-//            headers.add("Department");
-//            headers.add("Attend Time");
-//            headers.add("Verify Mode");
-//            attL = iController.getAttendanceByDuration(from, to);
-//            flag = iController.attExport(attL, path, headers, 1);
-//
-//            headers.add("Employee ID");
-//            headers.add("Username");
-//            headers.add("Starts from");
-//            headers.add("Ends on");
-//            headers.add("Leave Submitted on");
-//            usrL = iController.getLeavesByDuration(from, to);
-//            flag = iController.usersExport(usrL, path, headers, 1);
-//
-//            headers.add("Employee ID");
-//            headers.add("Username");
-//            headers.add("Clock In");
-//            headers.add("Clock out");
-//            headers.add("OT or Late hours");
-//            headers.add("Date");
-//            attL = iController.getOTByDuration(from, to);
-//            flag = iController.attExport(attL, path, headers, 2);
-//
-//        }
 
 
 }
