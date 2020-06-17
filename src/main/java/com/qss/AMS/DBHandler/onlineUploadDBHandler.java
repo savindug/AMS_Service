@@ -80,7 +80,7 @@ public class onlineUploadDBHandler {
         String jsonString;
         String finalJsonString = "{\"data\":[{\"userId\":\"0\"}]}";
         try {
-            URL url = new URL("http://localhost/AMS-API/api/employee/readmax.php?searchInput="+branchname);
+            URL url = new URL("http://ams-agri.qsslanka.com/employee/readmax.php?searchInput="+branchname);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -162,7 +162,7 @@ public class onlineUploadDBHandler {
 
 
                 try {
-                    URL url = new URL("http://localhost/AMS-API/api/employee/write.php");
+                    URL url = new URL("http://ams-agri.qsslanka.com/api/employee/write.php");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoOutput(true);
                     conn.setRequestMethod("POST");
@@ -220,7 +220,7 @@ public class onlineUploadDBHandler {
         String jsonString;
         String finalJsonString = null;
         try {
-            URL url = new URL("http://localhost/AMS-API/api/leave/readmax.php?searchInput="+branchname);
+            URL url = new URL("http://ams-agri.qsslanka.com/api/leave/readmax.php?searchInput="+branchname);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -346,7 +346,7 @@ public class onlineUploadDBHandler {
 
 
                 try {
-                    URL url = new URL("http://localhost/AMS-API/api/leave/write.php");
+                    URL url = new URL("http://ams-agri.qsslanka.com/api/leave/write.php");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoOutput(true);
                     conn.setRequestMethod("POST");
@@ -409,7 +409,7 @@ public class onlineUploadDBHandler {
         String jsonString;
         String finalJsonString = "{\"data\":[{\"clock\":\"2005-05-05 05:05:05\"}]}";;
         try {
-            URL url = new URL("http://localhost/AMS-API/api/attendance/readmax.php?searchInput="+branchname);
+            URL url = new URL("http://ams-agri.qsslanka.com/api/attendance/readmax.php?searchInput="+branchname);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -499,7 +499,7 @@ public class onlineUploadDBHandler {
                 System.out.println(att.attToString());
 
                 try {
-                    URL url = new URL("http://localhost/AMS-API/api/attendance/write.php");
+                    URL url = new URL("http://ams-agri.qsslanka.com/api/attendance/write.php");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoOutput(true);
                     conn.setRequestMethod("POST");
@@ -560,7 +560,7 @@ public class onlineUploadDBHandler {
         String jsonString;
         String finalJsonString = "{\"data\":[{\"clock\":\"2005-05-05 05:05:05\"}]}";;
         try {
-            URL url = new URL("http://localhost/AMS-API/api/ot/readmax.php?searchInput="+branchname);
+            URL url = new URL("http://ams-agri.qsslanka.com/api/ot/readmax.php?searchInput="+branchname);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -655,7 +655,7 @@ public class onlineUploadDBHandler {
                 System.out.println(ot.otToString());
 
                 try {
-                    URL url = new URL("http://localhost/AMS-API/api/ot/write.php");
+                    URL url = new URL("http://ams-agri.qsslanka.com/api/ot/write.php");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoOutput(true);
                     conn.setRequestMethod("POST");
