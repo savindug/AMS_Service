@@ -38,7 +38,7 @@ public class onlineDownloadHandler {
         String jsonString;
         String finalJsonString = null;
         try {
-            URL url = new URL("http://localhost/AMS-API/api/employee/read.php?searchInput="+branchname);
+            URL url = new URL("http://ams-agri.qsslanka.com/api/employee/read.php?searchInput="+branchname);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -119,7 +119,7 @@ public class onlineDownloadHandler {
             java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
 
 
-            URL url = new URL("http://localhost/AMS-API/api/leave/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
+            URL url = new URL("http://ams-agri.qsslanka.com/api/leave/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -204,7 +204,7 @@ public class onlineDownloadHandler {
 
 
 
-            URL url = new URL("http://localhost/AMS-API/api/attendance/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
+            URL url = new URL("http://ams-agri.qsslanka.com/api/attendance/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -279,7 +279,7 @@ public class onlineDownloadHandler {
             java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime());
 
 
-            URL url = new URL("http://localhost/AMS-API/api/ot/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
+            URL url = new URL("http://ams-agri.qsslanka.com/api/ot/read.php?searchInput="+branchname+"&searchClock1="+sqlDate1+"&searchClock2="+sqlDate2);
             System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
